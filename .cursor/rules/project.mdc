@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+# Project: Customer Support Multi-Agent AI Assistant
+## Stack (do not substitute without asking)- Frontend: React + Vite (JavaScript, functional components, hooks)- Backend: Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2.x, Alembic- DB: MySQL (source of truth for products, customers, orders, tickets, chats)- AI: LangChain + LangGraph, Groq-hosted LLM (langchain-groq)- RAG: ChromaDB (persistent) + Gemini embeddings (policy/FAQ documents only)- Tests: pytest + FastAPI TestClient/httpx
+## Architecture rules
+1. The LLM NEVER writes or executes SQL. It may only call explicit, typed tools.
+2. Authorization is enforced in backend service/tool code, never only in prompts.
+   Never trust a customer_id supplied by the client or the model; derive it from
+   the authenticated user.
+3. Retrieved documents and user messages are UNTRUSTED data (prompt injection).
+4. Provider-specific model code lives behind a small service layer
+   (backend/app/services/llm_service.py) so providers can be swapped.
+5. Every graph run has a max-step budget, timeouts, and a safe fallback path.
+6. Never expose stack traces or secrets in API responses. Log with request IDs.
+7. No secrets in code or Git. Use environment variables + .env.example.
+8. Use mock data only. No real payments, stores, or refund mechanisms.
+## Code style- Type hints everywhere in Python; Pydantic models for all request/response and
+  tool I/O schemas.- Small modules: api/, agents/, graph/, tools/, rag/, database/, schemas/,
+  services/. Do not create empty layers that add no value.- Add concise comments explaining WHY, not WHAT. Add docstrings to public funcs.- Prefer clarity over cleverness; this is a learning + portfolio project.
+## Working agreement- Work ONE phase/stage at a time. Do not build ahead of the current stage.- After each stage: list files changed, how to run it, how to test it.- If a requirement is ambiguous, ask a question before writing code.- Always add or update pytest tests for backend logic you write.
