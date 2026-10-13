@@ -1,3 +1,6 @@
-# Python dependencies will be pinned in a later stage.
-# Planned stack: FastAPI, Pydantic v2, SQLAlchemy 2.x, Alembic,
-# LangChain, LangGraph, langchain-groq, ChromaDB, pytest, httpx.
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic-settings==2.15.0
+python-dotenv==1.2.4
+pytest==9.1.1
+httpx==0.28.1
